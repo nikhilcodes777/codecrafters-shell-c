@@ -26,6 +26,22 @@ int main(int argc, char *argv[]) {
       continue;
     }
 
+    if (strncmp(buf, "type", 4) == 0) {
+      char *cmd = buf + 5;
+      while (*cmd == ' ')
+        cmd++;
+      // TODO: Use Array but this works for now
+      if (strcmp(cmd, "echo") == 0 || strcmp(cmd, "exit") == 0 ||
+          strcmp(cmd, "type") == 0) {
+        printf("%s is a shell builtin\n", cmd);
+      } else if (*cmd == '\0') {
+        continue;
+
+      } else {
+        printf("%s: not found\n", cmd);
+      }
+      continue;
+    }
     printf("%s: command not found\n", buf);
   }
 
