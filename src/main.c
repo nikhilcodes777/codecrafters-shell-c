@@ -13,6 +13,7 @@ int main(int argc, char *argv[]) {
       printf("Error reading from stdin\n");
       exit(0);
     }
+    buf[strcspn(buf, "\n")] = 0;
     int exit_code = 0;
     if (sscanf(buf, "exit %d", &exit_code) >= 1) {
       exit(exit_code);
@@ -20,7 +21,10 @@ int main(int argc, char *argv[]) {
     if (strncmp(buf, "exit", 4) == 0) {
       exit(0);
     }
-    buf[strcspn(buf, "\n")] = 0;
+    if (strncmp(buf, "echo", 4) == 0) {
+      printf("%s\n", &buf[5]);
+      continue;
+    }
 
     printf("%s: command not found\n", buf);
   }
